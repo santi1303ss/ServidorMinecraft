@@ -1,0 +1,20 @@
+@use "tailwindcss";
+@use "styles/variables";
+@use "styles/components";
+@use "@xterm/xterm/css/xterm.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--mc-font);
+  background: var(--mc-bg);
+  color: var(--mc-text);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

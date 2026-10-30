@@ -1,0 +1,69 @@
+// MineServer Design Tokens
+// All colors, spacing, fonts, radii, shadows, transitions
+
+:root {
+// Backgrounds
+--mc-bg: #140601;
+--mc-bg-shell: rgb(37, 22, 22);
+--mc-bg-card: #18181b;
+--mc-bg-input: #27272a;
+--mc-bg-input-hover: #3f3f46;
+// Borders
+--mc-border: #27272a;
+--mc-border-medium: #3f3f46;
+--mc-border-hover: #52525b;
+// Text
+--mc-text: white;
+--mc-text-secondary: #a1a1aa;
+--mc-text-muted: #71717a;
+--mc-text-light: #d4d4d8;
+--mc-text-value: #e4e4e7;
+// Green primary
+--mc-green: #059669;
+--mc-green-hover: #10b981;
+--mc-green-accent: #34d399;
+--mc-green-bg: rgba(16, 185, 129, 0.15);
+--mc-green-glow: rgba(16, 185, 129, 0.3);
+--mc-green-glow-subtle: rgba(16, 185, 129, 0.1);
+// Red danger
+--mc-red: #dc2626;
+--mc-red-hover: #ef4444;
+--mc-red-text: #f87171;
+--mc-red-bg: rgba(220, 38, 38, 0.15);
+--mc-red-glow: rgba(220, 38, 38, 0.3);
+// Blue progress
+--mc-blue: #3b82f6;
+--mc-blue-light: #60a5fa;
+--mc-blue-bg: rgba(59, 130, 246, 0.15);
+--mc-blue-glow: rgba(59, 130, 246, 0.3);
+--mc-blue-glow-subtle: rgba(59, 130, 246, 0.1);
+// Overlays
+--mc-overlay: rgba(0, 0, 0, 0.6);
+--mc-overlay-dark: rgba(0, 0, 0, 0.7);
+--mc-overlay-darker: rgba(0, 0, 0, 0.8);
+// Font families
+--mc-font: "VT323", monospace;
+--mc-font-mono: "VT323", monospace;
+--mc-font-num: "VT323", monospace;
+// Border radii
+--mc-radius-xs: 0.25rem;
+--mc-radius-sm: 0.5rem;
+--mc-radius-md: 0.625rem;
+--mc-radius-lg: 0.75rem;
+--mc-radius-xl: 1rem;
+--mc-radius-pill: 9999px;
+// Shadows
+--mc-shadow-btn: 0 2px 8px rgba(5, 150, 105, 0.3);
+--mc-shadow-btn-hover: 0 4px 12px rgba(16, 185, 129, 0.4);
+--mc-shadow-btn-red: 0 2px 8px rgba(220, 38, 38, 0.3);
+--mc-shadow-btn-red-hover: 0 4px 12px rgba(239, 68, 68, 0.4);
+--mc-shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.3);
+--mc-shadow-active: 0 0 0 1px var(--mc-green-glow-subtle), 0 4px 20px var(--mc-green-glow-subtle);
+--mc-shadow-focus: 0 0 0 2px var(--mc-green-hover);
+--mc-shadow-toggle: 0 1px 3px rgba(0, 0, 0, 0.3);
+// Transitions
+--mc-transition: 0.15s;
+--mc-transition-card: 0.2s;
+--mc-transition-slow: 0.3s ease;
+--mc-transition-spinner: 0.8s linear infinite;
+}
