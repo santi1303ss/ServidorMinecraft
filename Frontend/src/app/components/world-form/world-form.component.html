@@ -1,0 +1,85 @@
+<div class="mc-overlay" (click)="close.emit()">
+  <div class="mc-modal" (click)="$event.stopPropagation()">
+    <h2 class="mc-modal-title">New World</h2>
+    <div class="mc-form-group">
+      <label class="mc-form-label">Name</label>
+      <input [(ngModel)]="name" class="mc-form-input" placeholder="My World"/>
+    </div>
+    <div class="mc-form-group">
+      <label class="mc-form-label">Seed (empty = random)</label>
+      <input [(ngModel)]="seed" class="mc-form-input mc-mono" placeholder="random"/>
+    </div>
+    <div class="mc-form-row">
+      <div class="mc-form-group">
+        <label class="mc-form-label">Game Mode</label>
+        <select [(ngModel)]="gameMode" class="mc-form-select">
+          <option value="survival">Survival</option>
+          <option value="creative">Creative</option>
+          <option value="adventure">Adventure</option>
+          <option value="spectator">Spectator</option>
+        </select>
+      </div>
+      <div class="mc-form-group">
+        <label class="mc-form-label">Difficulty</label>
+        <select [(ngModel)]="difficulty" class="mc-form-select">
+          <option value="peaceful">Peaceful</option>
+          <option value="easy">Easy</option>
+          <option value="normal">Normal</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+    </div>
+    <div class="mc-form-row">
+      <div class="mc-form-group">
+        <label class="mc-form-label">Max Players</label>
+        <input type="number" [(ngModel)]="maxPlayers" class="mc-form-input" min="1" max="100"/>
+      </div>
+      <div class="mc-form-group">
+        <label class="mc-form-label">View Distance</label>
+        <input type="number" [(ngModel)]="viewDistance" class="mc-form-input" min="3" max="32"/>
+      </div>
+    </div>
+    <div class="mc-form-row">
+      <div class="mc-form-group">
+        <label class="mc-form-label">Simulation Distance</label>
+        <input type="number" [(ngModel)]="simulationDistance" class="mc-form-input" min="3" max="32"/>
+      </div>
+      <div class="mc-form-group">
+        <label class="mc-form-label">Spawn Protection</label>
+        <input type="number" [(ngModel)]="spawnProtection" class="mc-form-input" min="0" max="100"/>
+      </div>
+    </div>
+    <div class="mc-form-group">
+      <label class="mc-form-label">MOTD</label>
+      <input [(ngModel)]="motd" class="mc-form-input" placeholder="A Minecraft Server" maxlength="59"/>
+    </div>
+    <div class="mc-form-checks">
+      <label class="mc-check-label">
+        <input type="checkbox" [(ngModel)]="pvp" class="mc-form-check"/>
+        <span>PvP</span>
+      </label>
+      <label class="mc-check-label">
+        <input type="checkbox" [(ngModel)]="onlineMode" class="mc-form-check"/>
+        <span>Online Mode</span>
+      </label>
+      <label class="mc-check-label">
+        <input type="checkbox" [(ngModel)]="bonusChest" class="mc-form-check"/>
+        <span>Bonus Chest</span>
+      </label>
+    </div>
+    <div class="mc-form-checks">
+      <label class="mc-check-label">
+        <input type="checkbox" [(ngModel)]="enableCommands" class="mc-form-check"/>
+        <span>Enable Commands</span>
+      </label>
+      <label class="mc-check-label">
+        <input type="checkbox" [(ngModel)]="generateStructures" class="mc-form-check"/>
+        <span>Generate Structures</span>
+      </label>
+    </div>
+    <div class="mc-modal-actions">
+      <button (click)="close.emit()" class="mc-btn-cancel">Cancel</button>
+      <button (click)="submit()" [disabled]="!name" class="mc-btn-submit">Create</button>
+    </div>
+  </div>
+</div>

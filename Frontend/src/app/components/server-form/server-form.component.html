@@ -1,0 +1,62 @@
+<div class="mc-overlay" (click)="close.emit()">
+  <div class="mc-modal" (click)="$event.stopPropagation()">
+    <h2 class="mc-modal-title">New Server</h2>
+    <div class="mc-form-group">
+      <label class="mc-form-label">Name</label>
+      <input [(ngModel)]="name" class="mc-form-input" placeholder="My Server"/>
+    </div>
+    <div class="mc-form-group">
+      <label class="mc-form-label">Engine</label>
+      <select [(ngModel)]="engine" (ngModelChange)="onEngineChange()" class="mc-form-select">
+        <option value="">Select engine</option>
+        <option value="vanilla">Vanilla</option>
+        <option value="fabric">Fabric</option>
+        <option value="forge">Forge</option>
+        <option value="neoforge">NeoForge</option>
+      </select>
+    </div>
+    <div class="mc-form-group">
+      <label class="mc-form-label">Version</label>
+      <select [(ngModel)]="version" class="mc-form-select" [disabled]="!engine">
+        <option value="">Select version</option>
+        @for (v of versions(); track v) {
+          <option [value]="v">{{ v }}</option>
+        }
+      </select>
+    </div>
+    <div class="mc-form-group">
+      <label class="mc-form-label">Game Directory</label>
+      <input [(ngModel)]="gameDir" readonly (focus)="pickFolder()" (click)="pickFolder()" class="mc-form-input mc-mono" placeholder="default (C:\Users\Lopez\Documents\mc-servers)"/>
+    </div>
+    <div class="mc-form-row">
+      <div class="mc-form-group">
+        <label class="mc-form-label">Max RAM</label>
+        <select [(ngModel)]="maxRam" class="mc-form-select">
+          <option value="2G">2 GB</option>
+          <option value="4G">4 GB</option>
+          <option value="6G">6 GB</option>
+          <option value="8G">8 GB</option>
+          <option value="12G">12 GB</option>
+          <option value="16G">16 GB</option>
+        </select>
+      </div>
+      <div class="mc-form-group">
+        <label class="mc-form-label">Java Executable</label>
+        <select [(ngModel)]="javaExec" class="mc-form-select mc-mono">
+          <option value="">System Java (default)</option>
+          @for (j of javaVersions(); track j.path) {
+            <option [value]="j.path">{{ j.name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+    <div class="mc-form-group">
+      <label class="mc-form-label">JVM Arguments</label>
+      <input [(ngModel)]="jvmArgs" class="mc-form-input mc-mono" placeholder="-XX:+UseG1GC -XX:+UnlockExperimentalVMOptions"/>
+    </div>
+    <div class="mc-modal-actions">
+      <button (click)="close.emit()" class="mc-btn-cancel">Cancel</button>
+      <button (click)="submit()" [disabled]="!name || !engine || !version" class="mc-btn-submit">Create</button>
+    </div>
+  </div>
+</div>
