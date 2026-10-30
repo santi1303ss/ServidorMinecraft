@@ -1,0 +1,19 @@
+<div class="mod-row">
+  <div class="mod-info">
+    <div class="mod-icon">
+      <mc-icon name="package" class="w-4 h-4 text-zinc-400"/>
+    </div>
+    <div>
+      <p class="mod-name">{{ mod().name }}</p>
+      <p class="mod-meta">{{ mod().source || 'Custom' }} | {{ mod().modId }}</p>
+    </div>
+  </div>
+  <div class="mod-actions">
+    <button (click)="toggle.emit()" class="toggle" [class.on]="mod().enabled">
+      <div class="toggle-knob" [class.on]="mod().enabled"></div>
+    </button>
+    <button (click)="delete.emit($event)" class="btn-remove">
+      <mc-icon name="close" class="w-4 h-4"/>
+    </button>
+  </div>
+</div>

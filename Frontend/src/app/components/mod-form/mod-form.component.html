@@ -1,0 +1,25 @@
+<div class="mc-overlay" (click)="close.emit()">
+  <div class="mc-modal" (click)="$event.stopPropagation()">
+    <h2 class="mc-modal-title">Install Mod</h2>
+    <div class="mc-form-group">
+      <label class="mc-form-label">Mod ID / Slug</label>
+      <input [(ngModel)]="modId" class="mc-form-input mc-mono" placeholder="sodium"/>
+    </div>
+    <div class="mc-form-group">
+      <label class="mc-form-label">Display Name</label>
+      <input [(ngModel)]="name" class="mc-form-input" placeholder="Sodium"/>
+    </div>
+    <div class="mc-form-group">
+      <label class="mc-form-label">Source</label>
+      <select [(ngModel)]="source" class="mc-form-select">
+        <option value="Modrinth">Modrinth</option>
+        <option value="CurseForge">CurseForge</option>
+        <option value="Custom">Custom</option>
+      </select>
+    </div>
+    <div class="mc-modal-actions">
+      <button (click)="close.emit()" class="mc-btn-cancel">Cancel</button>
+      <button (click)="submit()" [disabled]="!modId || !name" class="mc-btn-submit">Install</button>
+    </div>
+  </div>
+</div>

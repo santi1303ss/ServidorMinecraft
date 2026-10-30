@@ -1,0 +1,87 @@
+.mod-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(39, 39, 42, 0.6);
+  border: 1px solid rgba(63, 63, 70, 0.3);
+  border-radius: var(--mc-radius-sm);
+  padding: 0.75rem 1rem;
+}
+
+.mod-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.mod-icon {
+  width: 2rem;
+  height: 2rem;
+  background: var(--mc-bg-input-hover);
+  border-radius: var(--mc-radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mod-name {
+  color: var(--mc-text);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.mod-meta {
+  color: var(--mc-text-muted);
+  font-size: 0.75rem;
+}
+
+.mod-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.toggle {
+  width: 2.5rem;
+  height: 1.25rem;
+  border-radius: var(--mc-radius-pill);
+  background: var(--mc-bg-input-hover);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background var(--mc-transition);
+  padding: 0;
+
+  &.on {
+    background: var(--mc-green);
+  }
+}
+
+.toggle-knob {
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: var(--mc-radius-pill);
+  background: var(--mc-text);
+  box-shadow: var(--mc-shadow-toggle);
+  transition: transform var(--mc-transition);
+
+  &.on {
+    transform: translateX(1.25rem);
+  }
+}
+
+.btn-remove {
+  color: var(--mc-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color var(--mc-transition);
+
+  &:hover {
+    color: var(--mc-red-text);
+  }
+}
