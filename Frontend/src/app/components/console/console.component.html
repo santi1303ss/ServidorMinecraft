@@ -1,0 +1,15 @@
+<div class="console-card">
+  <div class="console-header">
+    <h3 class="card-title">Terminal</h3>
+    <div class="console-status">
+      @if (connected()) {
+        <span class="status-dot connected"></span>
+        <span class="status-text">Connected</span>
+      } @else {
+        <span class="status-dot disconnected"></span>
+        <span class="status-text">Disconnected</span>
+      }
+    </div>
+  </div>
+  <div class="terminal-wrapper" #terminalContainer></div>
+</div>
