@@ -1,0 +1,31 @@
+<div class="mc-overlay" (click)="close.emit()">
+  <div class="mc-modal" (click)="$event.stopPropagation()">
+    <h2 class="mc-modal-title">Tunnel Configuration</h2>
+    <p class="mc-modal-desc">Enter your Playit.gg tunnel IPs</p>
+
+    <div class="mc-form-group">
+      <label class="mc-form-label">Minecraft Tunnel IP</label>
+      <div class="mc-input-row">
+        <input [(ngModel)]="minecraftTunnel" class="mc-form-input mc-mono" placeholder="IP:PORT"/>
+        <button (click)="test(minecraftTunnel)" class="mc-btn-test">Test</button>
+      </div>
+    </div>
+
+    <div class="mc-form-group">
+      <label class="mc-form-label">Voice Chat Tunnel IP</label>
+      <div class="mc-input-row">
+        <input [(ngModel)]="voiceChatTunnel" class="mc-form-input mc-mono" placeholder="IP:PORT"/>
+        <button (click)="test(voiceChatTunnel)" class="mc-btn-test">Test</button>
+      </div>
+    </div>
+
+    @if (testResult) {
+      <p class="mc-test-result">{{ testResult }}</p>
+    }
+
+    <div class="mc-modal-actions">
+      <button (click)="close.emit()" class="mc-btn-cancel">Cancel</button>
+      <button (click)="save()" class="mc-btn-submit">Save</button>
+    </div>
+  </div>
+</div>

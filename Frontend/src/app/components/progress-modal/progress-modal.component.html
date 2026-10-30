@@ -1,0 +1,16 @@
+@if (show) {
+  <div class="modal-overlay">
+    <div class="modal">
+      <div class="spinner-ring">
+        <div class="spinner"></div>
+        <span class="spinner-pct">{{ activeWorld!.setupProgress }}%</span>
+      </div>
+      <h3 class="modal-title">Setting up world</h3>
+      <p class="modal-status">{{ formatStatus(activeWorld!.setupStatus) }}</p>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="activeWorld!.setupProgress"></div>
+      </div>
+      <p class="modal-hint">This may take a few minutes depending on the server type.</p>
+    </div>
+  </div>
+}
