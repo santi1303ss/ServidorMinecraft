@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 1.5rem;
+  background: rgb(37, 22, 22);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.logo-img {
+  height: 2.25rem;
+  width: auto;
+  display: block;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-text {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+}
