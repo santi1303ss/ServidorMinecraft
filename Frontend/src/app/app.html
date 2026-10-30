@@ -1,0 +1,239 @@
+<div class="shell">
+  <mc-header/>
+  <div class="shell-body">
+    <aside class="sidebar">
+      <button class="nav-btn" [class.active]="nav() === 'servers'" title="Servers" (click)="goHome()">
+        <img src="assets/server-icon.png" alt="Servers" class="nav-img"/>
+      </button>
+      <button class="nav-btn" [class.active]="nav() === 'tunnels'" title="Tunnels" (click)="openTunnels()">
+        <img src="assets/tunnel-icon.png" alt="Tunnels" class="nav-img"/>
+      </button>
+      <button class="nav-btn" [class.active]="nav() === 'settings'" title="Settings" (click)="openSettings()">
+        <img src="assets/settings-icon.png" alt="Settings" class="nav-img"/>
+      </button>
+    </aside>
+    <main class="content" #contentEl [class.snap]="view() === 'servers'">
+  @if (view() === 'servers') {
+    <section class="home snap-section">
+      <img src="carrusel.png" class="home-carrusel" alt=""/>
+      <div class="home-bar">
+        <span class="home-stat">Servers Activos: {{ activeServers() }}</span>
+        <button class="home-scroll" (click)="scrollToList()" title="Ver lista">
+          <img src="down.png" alt="Scroll"/>
+        </button>
+        <span class="home-stat">Ip: wkandals.plygg</span>
+      </div>
+      <div class="home-new">
+        <button (click)="showServerForm.set(true)" class="mc-btn-primary mc-btn-wide">
+          <mc-icon name="plus" class="w-5 h-5"/>
+          New Server
+        </button>
+      </div>
+    </section>
+
+    <section class="server-list snap-section" #serverList>
+      <div class="section-header">
+        <h2 class="section-title">Lista de Servers</h2>
+        <button (click)="showServerForm.set(true)" class="mc-btn-primary mc-btn-wide">
+          <mc-icon name="plus" class="w-5 h-5"/>
+          New Server
+        </button>
+      </div>
+      <div class="grid">
+        @for (server of servers(); track server.name) {
+          <mc-server-card
+            [server]="server"
+            (select)="selectServer(server)"
+            (delete)="deleteServer($event, server.name)"
+          />
+        }
+        @if (servers().length === 0) {
+          <p class="empty">No servers yet. Create one to get started.</p>
+        }
+      </div>
+    </section>
+  }
+
+  @if (view() === 'worlds') {
+    <div class="section-header">
+      <button (click)="goBack()" class="mc-btn-secondary">
+        <mc-icon name="chevron-left" class="w-4 h-4"/>
+        Back
+      </button>
+      <h2 class="section-title section-title-sm">Worlds</h2>
+      <button (click)="showWorldForm.set(true)" class="mc-btn-primary mc-btn-wide">
+        <mc-icon name="plus" class="w-5 h-5"/>
+        New World
+      </button>
+    </div>
+    <div class="grid">
+      @for (world of worlds(); track world.name) {
+        <mc-world-card
+          [world]="world"
+          [isActive]="selectedServer()?.activeWorld === world.name"
+          (select)="selectActiveWorld(world)"
+          (openDetail)="selectWorld(world)"
+          (delete)="deleteWorld($event, world.name)"
+        />
+      }
+      @if (worlds().length === 0) {
+        <p class="empty">No worlds yet. Create one to get started.</p>
+      }
+    </div>
+  }
+
+  @if (view() === 'detail') {
+    <div class="section-header">
+      <button (click)="goBack()" class="mc-btn-secondary">
+        <mc-icon name="chevron-left" class="w-4 h-4"/>
+        Back
+      </button>
+      <h2 class="section-title">{{ worldDetail()?.name }}</h2>
+      <div class="server-actions">
+        @if (selectedServer()?.status === 'running') {
+          <button (click)="stopServer()" class="mc-btn-danger">Stop Server</button>
+        } @else if (selectedServer()?.status === 'starting') {
+          <button disabled class="mc-btn-secondary">Starting...</button>
+        } @else {
+          <button (click)="startServer()" class="mc-btn-primary">Start Server</button>
+        }
+      </div>
+    </div>
+
+    <div class="detail-tabs">
+      <button class="detail-tab" [class.active]="detailTab() === 'console'" (click)="detailTab.set('console')">Console</button>
+      <button class="detail-tab" [class.active]="detailTab() === 'config'" (click)="detailTab.set('config')">Config</button>
+      <div class="detail-tab-spacer"></div>
+      <div class="ip-bar">
+        <span class="ip-text mc-mono">{{ serverAddress() }}</span>
+        <button (click)="copyIp()" class="btn-copy">
+          <mc-icon name="copy" class="w-4 h-4"/>
+        </button>
+      </div>
+    </div>
+
+    @if (detailTab() === 'console') {
+      <mc-console
+        [serverName]="selectedServer()!.name"
+        [worldName]="worldDetail()!.name"
+        [running]="selectedServer()?.status === 'running'"
+        [starting]="selectedServer()?.status === 'starting'"
+      />
+    }
+
+    @if (detailTab() === 'config') {
+      <div class="info-card">
+        <div class="card-header">
+          <h3 class="card-title">World Info</h3>
+          @if (worldDirty) {
+            <button (click)="saveWorld()" class="mc-btn-primary btn-sm">Save</button>
+          }
+        </div>
+        <div class="info-grid">
+          <div class="info-col info-col-booleans">
+            <div class="info-item has-toggle">
+              <label class="info-label">PvP</label>
+              <input type="checkbox" [(ngModel)]="worldForm()!.pvp" (ngModelChange)="onWorldInput('pvp', $event)" class="mc-toggle"/>
+            </div>
+            <div class="info-item has-toggle">
+              <label class="info-label">Online Mode</label>
+              <input type="checkbox" [(ngModel)]="worldForm()!.onlineMode" (ngModelChange)="onWorldInput('onlineMode', $event)" class="mc-toggle"/>
+            </div>
+            <div class="info-item has-toggle">
+              <label class="info-label">Bonus Chest</label>
+              <input type="checkbox" [checked]="worldDetail()?.bonusChest" disabled class="mc-toggle"/>
+            </div>
+            <div class="info-item has-toggle">
+              <label class="info-label">Commands</label>
+              <input type="checkbox" [checked]="worldDetail()?.enableCommands" disabled class="mc-toggle"/>
+            </div>
+            <div class="info-item has-toggle">
+              <label class="info-label">Generate Structures</label>
+              <input type="checkbox" [checked]="worldDetail()?.generateStructures" disabled class="mc-toggle"/>
+            </div>
+          </div>
+          <div class="info-col">
+            <div class="info-item">
+              <span class="info-label">Seed</span>
+              <span class="info-value mc-mono">{{ worldDetail()?.seed || 'Random' }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Game Mode</span>
+              <span class="info-value">{{ worldDetail()?.gameMode }}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Difficulty</span>
+              <span class="info-value">{{ worldDetail()?.difficulty }}</span>
+            </div>
+            <div class="info-item">
+              <label class="info-label">Max Players</label>
+              <input type="number" [(ngModel)]="worldForm()!.maxPlayers" (ngModelChange)="onWorldInput('maxPlayers', $event)" class="mc-form-input" min="1" max="100"/>
+            </div>
+            <div class="info-item">
+              <label class="info-label">View Distance</label>
+              <input type="number" [(ngModel)]="worldForm()!.viewDistance" (ngModelChange)="onWorldInput('viewDistance', $event)" class="mc-form-input" min="3" max="32"/>
+            </div>
+            <div class="info-item">
+              <label class="info-label">Simulation Distance</label>
+              <input type="number" [(ngModel)]="worldForm()!.simulationDistance" (ngModelChange)="onWorldInput('simulationDistance', $event)" class="mc-form-input" min="3" max="32"/>
+            </div>
+            <div class="info-item">
+              <label class="info-label">Spawn Protection</label>
+              <input type="number" [(ngModel)]="worldForm()!.spawnProtection" (ngModelChange)="onWorldInput('spawnProtection', $event)" class="mc-form-input" min="0" max="100"/>
+            </div>
+            <div class="info-item">
+              <label class="info-label">MOTD</label>
+              <input type="text" [(ngModel)]="worldForm()!.motd" (ngModelChange)="onWorldInput('motd', $event)" class="mc-form-input" placeholder="A Minecraft Server" maxlength="59"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  }
+    </main>
+  </div>
+</div>
+
+@if (showServerForm()) {
+  <mc-server-form (close)="showServerForm.set(false)" (created)="createServer($event)"/>
+}
+
+@if (showWorldForm()) {
+  <mc-world-form (close)="showWorldForm.set(false)" (created)="createWorld($event)"/>
+}
+
+@if (showTunnelModal()) {
+  <mc-tunnel-modal (close)="closeTunnels()"/>
+}
+
+@if (showSettings()) {
+  <div class="mc-overlay" (click)="closeSettings()">
+    <div class="mc-modal settings-modal" (click)="$event.stopPropagation()">
+      <h2 class="mc-modal-title">Settings</h2>
+      <div class="settings-group">
+        <span class="mc-form-label">Minecraft directory</span>
+        <span class="settings-path">~/Documents/Minecraft</span>
+      </div>
+      <div class="settings-group">
+        <span class="mc-form-label">Java installations</span>
+        @for (java of javaVersions(); track java.path) {
+          <div class="java-row">
+            <span class="java-name">{{ java.name }}</span>
+            <span class="java-path">{{ java.path }}</span>
+          </div>
+        } @empty {
+          <span class="mc-modal-desc">No Java installations detected.</span>
+        }
+      </div>
+      <div class="mc-modal-actions">
+        <button class="mc-btn-cancel" (click)="closeSettings()">Close</button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (loading()) {
+  <mc-loading-overlay [message]="loadingMsg()"/>
+}
+
+<mc-progress-modal [worlds]="worlds()"/>
